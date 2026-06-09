@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indonesian Facts & Culture – Vocabulary Quiz Intermediate</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f5f4f0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    color: #1a1a1a;
+  }
+
+  .qapp {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: #fff;
+    border: 0.5px solid #e0dfd8;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .header-icon {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: #EEEDFE;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .header-icon i { font-size: 22px; color: #534AB7; }
+  .header-title { font-size: 16px; font-weight: 500; }
+  .header-sub   { font-size: 12px; color: #888; margin-top: 2px; }
+  .header-stats { margin-left: auto; display: flex; gap: 10px; }
+  .stat-pill {
+    background: #f5f4f0;
+    border: 0.5px solid #e0dfd8;
+    border-radius: 99px;
+    padding: 4px 12px;
+    font-size: 12px; color: #666;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .stat-pill i { font-size: 14px; }
+
+  /* ── Progress dots ── */
+  .prog-wrap { margin-bottom: 1.25rem; }
+  .prog-steps { display: flex; gap: 4px; margin-bottom: 6px; }
+  .prog-dot {
+    flex: 1; height: 4px; border-radius: 99px;
+    background: #e0dfd8;
+    transition: background 0.3s;
+  }
+  .prog-dot.done    { background: #534AB7; }
+  .prog-dot.current { background: #AFA9EC; }
+  .prog-meta {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: #aaa;
+  }
+
+  /* ── Scene label ── */
+  .scene-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #EEEDFE;
+    border-radius: 99px;
+    padding: 5px 12px;
+    font-size: 12px; color: #3C3489; font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .scene-label i { font-size: 14px; color: #534AB7; }
+
+  /* ── Question card ── */
+  .q-card {
+    background: #fff;
+    border: 0.5px solid #e0dfd8;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .q-sentence {
+    font-size: 17px; line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .blank {
+    display: inline-block;
+    background: #EEEDFE; color: #534AB7;
+    font-weight: 500;
+    padding: 1px 10px;
+    border-radius: 6px;
+    border-bottom: 2px solid #534AB7;
+    min-width: 80px; text-align: center;
+  }
+
+  /* ── Options ── */
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opt {
+    background: #f5f4f0;
+    border: 1.5px solid #e0dfd8;
+    border-radius: 8px;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 14px; color: #1a1a1a;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: inherit;
+  }
+  .opt:hover:not(:disabled) { border-color: #534AB7; background: #EEEDFE; }
+  .opt-letter {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid #ccc;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500; color: #888;
+    flex-shrink: 0; transition: all 0.15s;
+  }
+  .opt.correct { background: #EAF3DE; border-color: #3B6D11; }
+  .opt.correct .opt-letter { background: #3B6D11; border-color: #3B6D11; color: #fff; }
+  .opt.wrong   { background: #FCEBEB; border-color: #A32D2D; }
+  .opt.wrong .opt-letter   { background: #A32D2D; border-color: #A32D2D; color: #fff; }
+  .opt.reveal  { background: #EAF3DE; border-color: #3B6D11; opacity: 0.6; }
+  .opt.reveal .opt-letter  { background: #3B6D11; border-color: #3B6D11; color: #fff; }
+  .opt:disabled { cursor: default; }
+
+  /* ── Feedback ── */
+  .feedback-box {
+    border-radius: 8px; padding: 12px 14px; margin-top: 10px;
+    display: flex; gap: 10px; align-items: flex-start;
+    border: 0.5px solid;
+  }
+  .feedback-box.fb-correct { background: #EAF3DE; border-color: #3B6D11; }
+  .feedback-box.fb-wrong   { background: #FCEBEB; border-color: #A32D2D; }
+  .fb-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .fb-correct .fb-icon  { color: #3B6D11; }
+  .fb-wrong   .fb-icon  { color: #A32D2D; }
+  .fb-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .fb-correct .fb-title { color: #27500A; }
+  .fb-wrong   .fb-title { color: #501313; }
+  .fb-desc { font-size: 12px; line-height: 1.5; }
+  .fb-correct .fb-desc  { color: #3B6D11; }
+  .fb-wrong   .fb-desc  { color: #A32D2D; }
+
+  /* ── Navigation ── */
+  .bottom-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 0.75rem;
+  }
+  .btn-nav {
+    padding: 9px 20px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px; background: transparent;
+    color: #666; font-size: 13px; cursor: pointer;
+    font-family: inherit;
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-nav:hover   { background: #f0efe8; }
+  .btn-nav:disabled { opacity: 0.3; cursor: default; }
+  .btn-next {
+    padding: 9px 22px;
+    border: none; border-radius: 8px;
+    background: #534AB7; color: #fff;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    font-family: inherit;
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-next:hover { background: #3C3489; }
+
+  /* ── Result page ── */
+  .result-wrap { text-align: center; padding: 1rem 0; }
+  .score-header {
+    background: #fff;
+    border: 0.5px solid #e0dfd8;
+    border-radius: 12px;
+    padding: 2rem 1.5rem; margin-bottom: 1rem;
+  }
+  .score-big   { font-size: 56px; font-weight: 500; color: #534AB7; line-height: 1; }
+  .score-denom { font-size: 22px; color: #888; font-weight: 400; }
+  .score-pct {
+    display: inline-block;
+    background: #EEEDFE; color: #3C3489;
+    border-radius: 99px; padding: 4px 14px;
+    font-size: 13px; font-weight: 500; margin: 8px 0 1rem;
+  }
+  .grade-msg  { font-size: 18px; font-weight: 500; }
+  .grade-sub  { font-size: 13px; color: #888; margin-top: 4px; }
+
+  .stats-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px; margin-bottom: 1rem;
+  }
+  .s-card {
+    background: #f5f4f0; border-radius: 8px;
+    padding: 12px; text-align: center;
+  }
+  .s-num { font-size: 22px; font-weight: 500; }
+  .s-lbl { font-size: 11px; color: #888; margin-top: 2px; }
+  .s-correct .s-num { color: #3B6D11; }
+  .s-wrong   .s-num { color: #A32D2D; }
+  .s-score   .s-num { color: #534AB7; }
+
+  .review-title {
+    font-size: 14px; font-weight: 500;
+    margin: 1.25rem 0 0.75rem; text-align: left;
+  }
+  .r-item {
+    border-radius: 8px; padding: 10px 14px;
+    margin-bottom: 6px; text-align: left; border: 0.5px solid;
+  }
+  .r-item.ri-ok  { background: #EAF3DE; border-color: #97C459; }
+  .r-item.ri-bad { background: #FCEBEB; border-color: #F09595; }
+  .r-q { font-size: 12px; line-height: 1.5; margin-bottom: 4px; }
+  .ri-ok  .r-q  { color: #27500A; }
+  .ri-bad .r-q  { color: #501313; }
+  .r-ans { font-size: 11px; display: flex; gap: 8px; align-items: center; }
+  .ri-ok  .r-ans { color: #3B6D11; }
+  .ri-bad .r-ans { color: #A32D2D; }
+  .r-badge {
+    padding: 1px 8px; border-radius: 99px;
+    font-size: 10px; font-weight: 500;
+  }
+  .ri-ok  .r-badge { background: #C0DD97; color: #173404; }
+  .ri-bad .r-badge { background: #F7C1C1; color: #501313; }
+
+  .btn-restart {
+    padding: 11px 28px;
+    background: #534AB7; color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-family: inherit; margin-top: 0.5rem;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.15s;
+  }
+  .btn-restart:hover { background: #3C3489; }
+</style>
+</head>
+<body>
+
+<div class="qapp">
+  <div id="app"></div>
+</div>
+
+<script>
+  const SCENES = [
+    {icon:'ti-home',           label:'At home'},
+    {icon:'ti-building-store', label:'At the store'},
+    {icon:'ti-stethoscope',    label:'At the clinic'},
+    {icon:'ti-building-bank',  label:'At the bank'},
+    {icon:'ti-fork',           label:'At the restaurant'},
+    {icon:'ti-home',           label:'At home'},
+    {icon:'ti-heart',          label:'Daily habits'},
+    {icon:'ti-building-store', label:'At the store'},
+    {icon:'ti-tool',           label:'Home repair'},
+    {icon:'ti-clipboard',      label:'At the office'},
+    {icon:'ti-building-store', label:'At the store'},
+    {icon:'ti-home',           label:'In the kitchen'},
+    {icon:'ti-briefcase',      label:'At work'},
+    {icon:'ti-shopping-cart',  label:'Grocery shopping'},
+    {icon:'ti-home',           label:'In the kitchen'},
+  ];
+
+  const Qs = [
+
+{
+q:"Plants need _____ to make their own food through photosynthesis.",
+ans:"sunlight",
+opts:["sunlight","plastic","sand","metal"],
+exp:"Plants use sunlight to produce food through photosynthesis."
+},
+
+{
+q:"Water turns into ice when the temperature becomes very _____.",
+ans:"cold",
+opts:["cold","hot","windy","dry"],
+exp:"Water freezes and becomes ice when it is cold enough."
+},
+
+{
+q:"Which gas do humans need to breathe in order to survive?",
+ans:"oxygen",
+opts:["oxygen","carbon dioxide","helium","nitrogen"],
+exp:"Humans need oxygen for respiration."
+},
+
+{
+q:"The Earth moves around the _____.",
+ans:"Sun",
+opts:["Moon","Mars","Sun","Jupiter"],
+exp:"The Earth orbits the Sun."
+},
+
+{
+q:"Which part of a plant usually grows underground?",
+ans:"root",
+opts:["leaf","flower","root","fruit"],
+exp:"Roots grow underground and absorb water and nutrients."
+},
+
+{
+q:"Rain comes from _____ in the sky.",
+ans:"clouds",
+opts:["rocks","clouds","trees","mountains"],
+exp:"Rain forms in clouds before falling to the Earth."
+},
+
+{
+q:"Animals that eat only plants are called _____.",
+ans:"herbivores",
+opts:["carnivores","omnivores","herbivores","predators"],
+exp:"Herbivores survive by eating plants."
+},
+
+{
+q:"Which planet is known as the Red Planet?",
+ans:"Mars",
+opts:["Venus","Saturn","Mars","Mercury"],
+exp:"Mars is often called the Red Planet because of its reddish surface."
+},
+
+{
+q:"A baby frog is called a _____.",
+ans:"tadpole",
+opts:["cub","calf","tadpole","chick"],
+exp:"A tadpole is the larval stage of a frog."
+},
+
+{
+q:"Which natural resource do plants absorb from the soil?",
+ans:"water",
+opts:["water","sunlight","air","clouds"],
+exp:"Plants absorb water through their roots."
+},
+
+{
+q:"The largest ocean on Earth is the _____ Ocean.",
+ans:"Pacific",
+opts:["Atlantic","Indian","Pacific","Arctic"],
+exp:"The Pacific Ocean is the largest ocean on Earth."
+},
+
+{
+q:"Which season is usually the hottest in many countries?",
+ans:"summer",
+opts:["winter","autumn","summer","spring"],
+exp:"Summer is generally the warmest season."
+},
+
+{
+q:"Lightning is usually seen during a _____.",
+ans:"storm",
+opts:["storm","drought","earthquake","sunrise"],
+exp:"Lightning commonly occurs during storms."
+},
+
+{
+q:"What do bees collect from flowers?",
+ans:"nectar",
+opts:["nectar","stones","leaves","roots"],
+exp:"Bees collect nectar to make honey."
+},
+
+{
+q:"Which animal is known as the largest mammal in the world?",
+ans:"blue whale",
+opts:["elephant","shark","blue whale","giraffe"],
+exp:"The blue whale is the largest mammal and animal known to exist."
+}
+
+];
+
+  let cur = 0, answered = [], userAns = [];
+
+  function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
+
+  function render() {
+    const q   = Qs[cur];
+    const sc  = SCENES[cur];
+    const isAns = answered[cur] !== undefined;
+    const ua  = userAns[cur];
+
+    if (!answered[cur]) answered[cur] = { shuffled: shuffle(q.opts) };
+    const shuffled = answered[cur].shuffled;
+
+    const doneDots = Array.from({ length: 15 }, (_, i) =>
+      `<div class="prog-dot ${i < cur ? 'done' : i === cur ? 'current' : ''}"></div>`
+    ).join('');
+
+    const sentence = q.q.replace('___',
+      `<span class="blank">${isAns ? q.ans : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</span>`
+    );
+
+    const letters = ['A','B','C','D'];
+    const optsHTML = shuffled.map((opt, i) => {
+      let cls = 'opt';
+      if (isAns) {
+        if (opt === q.ans) cls += (opt === ua ? ' correct' : ' reveal');
+        else if (opt === ua) cls += ' wrong';
+      }
+      return `<button class="${cls}" ${isAns ? 'disabled' : ''} onclick="pick('${opt}')">
+        <span class="opt-letter">${letters[i]}</span>${opt}
+      </button>`;
+    }).join('');
+
+    let fbHTML = '';
+    if (isAns) {
+      const ok = ua === q.ans;
+      fbHTML = `<div class="feedback-box ${ok ? 'fb-correct' : 'fb-wrong'}">
+        <i class="ti ${ok ? 'ti-circle-check' : 'ti-circle-x'} fb-icon"></i>
+        <div>
+          <div class="fb-title">${ok ? 'Correct!' : 'Incorrect — the right answer is: ' + q.ans}</div>
+          <div class="fb-desc">${q.exp}</div>
+        </div>
+      </div>`;
+    }
+
+    const doneCount = answered.filter(a => a && a.picked).length;
+    const corrCount = answered.filter((a, i) => a && a.picked && userAns[i] === Qs[i].ans).length;
+
+    document.getElementById('app').innerHTML = `
+      <div class="header">
+        <div class="header-icon"><i class="ti ti-book-2"></i></div>
+        <div>
+          <div class="header-title">Vocabulary quiz</div>
+          <div class="header-sub">Daily life · Intermediate</div>
+        </div>
+        <div class="header-stats">
+          <div class="stat-pill"><i class="ti ti-check"></i>${corrCount} correct</div>
+          <div class="stat-pill"><i class="ti ti-list-numbers"></i>${doneCount}/15</div>
+        </div>
+      </div>
+
+      <div class="prog-wrap">
+        <div class="prog-steps">${doneDots}</div>
+        <div class="prog-meta">
+          <span>Question ${cur + 1} of 15</span>
+          <span>${Math.round((cur / 15) * 100)}% complete</span>
+        </div>
+      </div>
+
+      <div class="scene-label">
+        <i class="ti ${sc.icon}"></i>${sc.label}
+      </div>
+
+      <div class="q-card">
+        <p class="q-sentence">${sentence}</p>
+        <div class="opts">${optsHTML}</div>
+        ${fbHTML}
+      </div>
+
+      <div class="bottom-row">
+        <button class="btn-nav" onclick="goBack()" ${cur === 0 ? 'disabled' : ''}>
+          <i class="ti ti-arrow-left"></i> Back
+        </button>
+        ${isAns && cur < 14
+          ? `<button class="btn-next" onclick="goNext()">Next <i class="ti ti-arrow-right"></i></button>`
+          : ''
+        }
+        ${isAns && cur === 14
+          ? `<button class="btn-next" onclick="showResult()">See results <i class="ti ti-trophy"></i></button>`
+          : ''
+        }
+      </div>
+    `;
+  }
+
+  function pick(opt) {
+    answered[cur].picked = true;
+    userAns[cur] = opt;
+    render();
+  }
+
+  function goBack() { if (cur > 0) { cur--; render(); } }
+  function goNext() { if (cur < 14) { cur++; render(); } }
+
+  function showResult() {
+    let sc = 0;
+    Qs.forEach((q, i) => { if (userAns[i] === q.ans) sc++; });
+    const pct   = Math.round((sc / 15) * 100);
+    const wrong = 15 - sc;
+
+    let grade, gsub;
+    if      (pct >= 90) { grade = 'Outstanding!';    gsub = 'Your vocabulary is excellent. Keep it up!'; }
+    else if (pct >= 75) { grade = 'Great work!';     gsub = 'You have a solid grasp of daily-life vocabulary.'; }
+    else if (pct >= 60) { grade = 'Good effort!';    gsub = 'Review the words you missed to level up.'; }
+    else                { grade = 'Keep practicing'; gsub = 'Read more and revisit these words — you will improve!'; }
+
+    const reviewHTML = Qs.map((q, i) => {
+      const ok = userAns[i] === q.ans;
+      const displayQ = q.q.replace('___', `<strong>${q.ans}</strong>`);
+      return `<div class="r-item ${ok ? 'ri-ok' : 'ri-bad'}">
+        <div class="r-q">${displayQ}</div>
+        <div class="r-ans">
+          ${ok
+            ? `<span class="r-badge">Correct</span>`
+            : `<span class="r-badge">Your answer: ${userAns[i] || '—'}</span>`
+          }
+        </div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('app').innerHTML = `
+      <div class="result-wrap">
+        <div class="score-header">
+          <div class="score-big">${sc}<span class="score-denom">/15</span></div>
+          <div class="score-pct">${pct}% score</div>
+          <div class="grade-msg">${grade}</div>
+          <div class="grade-sub">${gsub}</div>
+        </div>
+        <div class="stats-row">
+          <div class="s-card s-correct"><div class="s-num">${sc}</div><div class="s-lbl">Correct</div></div>
+          <div class="s-card s-wrong"><div class="s-num">${wrong}</div><div class="s-lbl">Wrong</div></div>
+          <div class="s-card s-score"><div class="s-num">${pct}%</div><div class="s-lbl">Final score</div></div>
+        </div>
+        <button class="btn-restart" onclick="restart()">
+          <i class="ti ti-refresh"></i> Try again
+        </button>
+        <div class="review-title">Answer review</div>
+        ${reviewHTML}
+      </div>
+    `;
+  }
+
+  function restart() { cur = 0; answered = []; userAns = []; render(); }
+
+  render();
+</script>
+</body>
+</html>
