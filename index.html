@@ -277,6 +277,7 @@
 {
 q:"Plants need _____ to make their own food through photosynthesis.",
 ans:"sunlight",
+phon:"/ˈsʌn.laɪt/",
 opts:["sunlight","plastic","sand","metal"],
 exp:"Plants use sunlight to produce food through photosynthesis."
 },
@@ -284,6 +285,7 @@ exp:"Plants use sunlight to produce food through photosynthesis."
 {
 q:"Water turns into ice when the temperature becomes very _____.",
 ans:"cold",
+phon:"/koʊld/",
 opts:["cold","hot","windy","dry"],
 exp:"Water freezes and becomes ice when it is cold enough."
 },
@@ -291,6 +293,7 @@ exp:"Water freezes and becomes ice when it is cold enough."
 {
 q:"Which gas do humans need to breathe in order to survive?",
 ans:"oxygen",
+phon:"/ˈɒk.sɪ.dʒən/",
 opts:["oxygen","carbon dioxide","helium","nitrogen"],
 exp:"Humans need oxygen for respiration."
 },
@@ -298,6 +301,7 @@ exp:"Humans need oxygen for respiration."
 {
 q:"The Earth moves around the _____.",
 ans:"Sun",
+phon:"/sʌn/",
 opts:["Moon","Mars","Sun","Jupiter"],
 exp:"The Earth orbits the Sun."
 },
@@ -305,6 +309,7 @@ exp:"The Earth orbits the Sun."
 {
 q:"Which part of a plant usually grows underground?",
 ans:"root",
+phon:"/ruːt/",
 opts:["leaf","flower","root","fruit"],
 exp:"Roots grow underground and absorb water and nutrients."
 },
@@ -312,6 +317,7 @@ exp:"Roots grow underground and absorb water and nutrients."
 {
 q:"Rain comes from _____ in the sky.",
 ans:"clouds",
+phon:"/klaʊdz/",
 opts:["rocks","clouds","trees","mountains"],
 exp:"Rain forms in clouds before falling to the Earth."
 },
@@ -319,6 +325,7 @@ exp:"Rain forms in clouds before falling to the Earth."
 {
 q:"Animals that eat only plants are called _____.",
 ans:"herbivores",
+phon:"/ˈhɜːr.bɪ.vɔːrz/",
 opts:["carnivores","omnivores","herbivores","predators"],
 exp:"Herbivores survive by eating plants."
 },
@@ -326,6 +333,7 @@ exp:"Herbivores survive by eating plants."
 {
 q:"Which planet is known as the Red Planet?",
 ans:"Mars",
+phon:"/mɑːrz/",
 opts:["Venus","Saturn","Mars","Mercury"],
 exp:"Mars is often called the Red Planet because of its reddish surface."
 },
@@ -333,6 +341,7 @@ exp:"Mars is often called the Red Planet because of its reddish surface."
 {
 q:"A baby frog is called a _____.",
 ans:"tadpole",
+phon:"/ˈtæd.poʊl/",
 opts:["cub","calf","tadpole","chick"],
 exp:"A tadpole is the larval stage of a frog."
 },
@@ -340,6 +349,7 @@ exp:"A tadpole is the larval stage of a frog."
 {
 q:"Which natural resource do plants absorb from the soil?",
 ans:"water",
+phon:"/ˈwɔː.tər/",
 opts:["water","sunlight","air","clouds"],
 exp:"Plants absorb water through their roots."
 },
@@ -347,6 +357,7 @@ exp:"Plants absorb water through their roots."
 {
 q:"The largest ocean on Earth is the _____ Ocean.",
 ans:"Pacific",
+phon:"/pəˈsɪf.ɪk/",
 opts:["Atlantic","Indian","Pacific","Arctic"],
 exp:"The Pacific Ocean is the largest ocean on Earth."
 },
@@ -354,6 +365,7 @@ exp:"The Pacific Ocean is the largest ocean on Earth."
 {
 q:"Which season is usually the hottest in many countries?",
 ans:"summer",
+phon:"/ˈsʌm.ər/",
 opts:["winter","autumn","summer","spring"],
 exp:"Summer is generally the warmest season."
 },
@@ -361,6 +373,7 @@ exp:"Summer is generally the warmest season."
 {
 q:"Lightning is usually seen during a _____.",
 ans:"storm",
+phon:"/stɔːrm/",
 opts:["storm","drought","earthquake","sunrise"],
 exp:"Lightning commonly occurs during storms."
 },
@@ -368,6 +381,7 @@ exp:"Lightning commonly occurs during storms."
 {
 q:"What do bees collect from flowers?",
 ans:"nectar",
+phon:"/ˈnek.tər/",
 opts:["nectar","stones","leaves","roots"],
 exp:"Bees collect nectar to make honey."
 },
@@ -375,6 +389,7 @@ exp:"Bees collect nectar to make honey."
 {
 q:"Which animal is known as the largest mammal in the world?",
 ans:"blue whale",
+phon:"/bluː weɪl/",
 opts:["elephant","shark","blue whale","giraffe"],
 exp:"The blue whale is the largest mammal and animal known to exist."
 }
@@ -420,7 +435,12 @@ exp:"The blue whale is the largest mammal and animal known to exist."
       fbHTML = `<div class="feedback-box ${ok ? 'fb-correct' : 'fb-wrong'}">
         <i class="ti ${ok ? 'ti-circle-check' : 'ti-circle-x'} fb-icon"></i>
         <div>
-          <div class="fb-title">${ok ? 'Correct!' : 'Incorrect — the right answer is: ' + q.ans}</div>
+          <div class="fb-title">
+${ok
+? `Correct!<br><span style="font-size:12px;font-weight:400;">${q.ans} ${q.phon}</span>`
+: `Incorrect — the right answer is: ${q.ans}<br><span style="font-size:12px;font-weight:400;">${q.phon}</span>`
+}
+</div>
           <div class="fb-desc">${q.exp}</div>
         </div>
       </div>`;
